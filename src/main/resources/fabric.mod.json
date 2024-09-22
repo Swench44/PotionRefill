@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "potionrefill",
+  "version": "1.0",
+  "name": "PotionRefill",
+  "description": "PotionRefill is a simple mod that allows players to quickly refill potions by pressing the middle mouse button.",
+  "authors": [
+    "Swench"
+  ],
+  "contact": {
+    "sources": "https://github.com/Swench44/PotionRefill"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/potionrefill/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "dev.swench.potionrefill.PotionRefill"
+    ]
+  },
+  "mixins": [
+    "potionrefill.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": "*"
+  }
+}
