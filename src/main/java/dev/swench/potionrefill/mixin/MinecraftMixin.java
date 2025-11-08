@@ -2,11 +2,11 @@ package dev.swench.potionrefill.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtil;
+import net.minecraft.item.SplashPotionItem;
 import net.minecraft.screen.slot.SlotActionType;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,9 +34,12 @@ public class MinecraftMixin {
 
         for (int i = startSlot; i < endSlot; i++) {
             ItemStack stack = mc().player.getInventory().getStack(i);
-            if (stack.getItem() != Items.SPLASH_POTION) continue;
+            if (!(stack.getItem() instanceof SplashPotionItem)) continue;
 
-            for (StatusEffectInstance effectInstance : PotionUtil.getPotionEffects(stack)) {
+            var potionContents = stack.get(DataComponentTypes.POTION_CONTENTS);
+            if (potionContents == null) continue;
+
+            for (StatusEffectInstance effectInstance : potionContents.getEffects()) {
                 if (effectInstance.getEffectType() == StatusEffects.INSTANT_HEALTH) {
                     if (effectInstance.getAmplifier() == 1) {
                         instantHealth2Slot = i;
